@@ -1,5 +1,5 @@
 services:
-  backend:
+  server:
     build: ./server
     ports:
       - "8000:8000"
@@ -9,4 +9,4 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - backend
+      - server
