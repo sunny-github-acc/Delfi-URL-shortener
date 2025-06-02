@@ -6,6 +6,6 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "express"]
+    "types": ["node", "express", "jest"]
   }
 }
