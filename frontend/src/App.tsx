@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import './App.css';
 
+type UrlItem = {
+  shortUrl: string;
+  inputUrl: string;
+};
+
 function App() {
   const [inputUrl, setInputUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
@@ -8,6 +13,7 @@ function App() {
   const [originalUrl, setOriginalUrl] = useState('');
   const [shortenedError, setShortenedError] = useState('');
   const [retrieveError, setRetrieveError] = useState('');
+  const [urls, setUrls] = useState<UrlItem[]>([]);
 
   const handleShorten = async () => {
     setShortenedError('');
@@ -31,6 +37,13 @@ function App() {
 
       const data = await res.json();
       setShortUrl(data.shortUrl);
+      setUrls(prevState => [
+        {
+          inputUrl,
+          shortUrl: data.shortUrl
+        },
+        ...prevState
+      ]);
       setOriginalUrl('');
       setRetrieveError('');
     } catch (err) {
@@ -124,6 +137,25 @@ function App() {
 
       {retrieveError && (
         <div style={{ marginTop: '1rem', color: 'red' }}>{retrieveError}</div>
+      )}
+
+      {urls.length > 0 && (
+        <>
+          <hr style={{ margin: '2rem 0' }} />
+          <h3>Previously Shortened URLs:</h3>
+          <ul>
+            {urls.map(({ inputUrl, shortUrl }, index) => (
+              <>
+                <li key={index} style={{ marginBottom: '0.5rem' }}>
+                  Original: <a href={inputUrl} target="_blank" rel="noreferrer">{inputUrl}</a>
+                </li>
+                <li key={index} style={{ marginBottom: '0.5rem' }}>
+                  Short: <a href={shortUrl} target="_blank" rel="noreferrer">{shortUrl}</a>
+                </li>
+              </>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );
