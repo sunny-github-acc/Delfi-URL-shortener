@@ -1,12 +1,22 @@
 services:
-  server:
+  server-1:
     build: ./server
     ports:
       - "8000:8000"
 
-  frontend:
+  frontend-1:
     build: ./frontend
     ports:
       - "3000:3000"
     depends_on:
-      - server
+      - server-1
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
