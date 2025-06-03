@@ -17,7 +17,7 @@ function App() {
 
   const handleShorten = async () => {
     setShortenedError('');
-  
+
     if (!inputUrl.trim()) {
       setShortenedError('Please enter a URL');
       return;
@@ -66,6 +66,7 @@ function App() {
       setOriginalUrl(data.originalUrl);
       setRetrieveError('');
     } catch (err) {
+      console.log("🚀 ~ handleRetrieve ~ err:", err)
       setOriginalUrl('');
       setRetrieveError('No URL found for this key');
     }
@@ -145,14 +146,14 @@ function App() {
           <h3>Previously Shortened URLs:</h3>
           <ul>
             {urls.map(({ inputUrl, shortUrl }, index) => (
-              <>
-                <li key={index} style={{ marginBottom: '0.5rem' }}>
-                  Original: <a href={inputUrl} target="_blank" rel="noreferrer">{inputUrl}</a>
+              <div key={index}>
+                <li style={{ marginBottom: '0.5rem' }}>
+                 {index} Original: <a href={inputUrl} target="_blank" rel="noreferrer">{inputUrl}</a>
                 </li>
-                <li key={index} style={{ marginBottom: '0.5rem' }}>
-                  Short: <a href={shortUrl} target="_blank" rel="noreferrer">{shortUrl}</a>
+                <li style={{ marginBottom: '0.5rem' }}>
+                  {index} Short: <a href={shortUrl} target="_blank" rel="noreferrer">{shortUrl}</a>
                 </li>
-              </>
+              </div>
             ))}
           </ul>
         </>
