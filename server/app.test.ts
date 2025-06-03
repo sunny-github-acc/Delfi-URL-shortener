@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('./app'); // Your express app
+const app = require('./index');
 
 describe('POST /api/shorten', () => {
     it('should return 400 if url is missing', async () => {
