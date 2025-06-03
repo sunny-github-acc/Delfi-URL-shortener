@@ -1,13 +1,15 @@
 # Delfi-URL-shortener
 
-## The best url shortener in a whole wide world
+## The best url shortener in a whole wide world 🚀
 
-
-Setting up:
-Copy ```./server/.env-example``` to ```./server/.env``` and set it up.
-
+Getting Started
+1. Copy the environment example file and configure your settings:
+```bash
+cp ./server/.env-example ./server/.env
+# Then edit .env with your preferred settings
+```
+2. Start the app with Docker Compose:
 ```bash
 docker compose up
 ```
-
-or go to frontend/server and follow instructions there.
+3. Alternatively, check the instructions for manual setup inside the frontend and server folders.
