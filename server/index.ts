@@ -1,15 +1,18 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
 const app = express();
 app.use(express.json());
+dotenv.config();
 
 const PORT = 8000;
-const MONGO_URI = 'mongodb://localhost:27017/urlshortener';
+const MONGO_URI = 'mongodb://mongo:27017/urlshortener';
+const { env: { MONGO_LOCAL } } = process;
 
-mongoose.connect(MONGO_URI)
-  .then(() => console.log('Connected to MongoDB'))
+mongoose.connect(MONGO_LOCAL || MONGO_URI)
+  .then(() => console.log('Connected to MongoDB 🚀'))
   .catch(err => {
     console.error('MongoDB connection error:', err);
     process.exit(1);
@@ -36,14 +39,16 @@ app.post('/api/shorten', async (req: Request, res: Response) => {
   const originalUrl = req.body.url;
 
   if (!originalUrl) {
-    return res.status(400).json({ error: 'No URL provided' });
+    res.status(400).json({ error: 'No URL provided' });
+    return;
   }
 
   // Check if URL already exists
   let existing = await Url.findOne({ originalUrl });
   if (existing) {
     const shortUrl = `${req.protocol}://${req.get('host')}/${existing.key}`;
-    return res.json({ shortUrl });
+    res.json({ shortUrl });
+    return;
   }
 
   // Generate unique key
